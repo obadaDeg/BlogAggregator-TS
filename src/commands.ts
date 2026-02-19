@@ -1,5 +1,5 @@
 import { setUser } from "./config.js";
-import { createUser, getUserByName } from "./lib/db/queries/users.js";
+import { createUser, getUserByName, resetUsers } from "./lib/db/queries/users.js";
 
 export type CommandHandler = (
   cmdName: string,
@@ -66,4 +66,13 @@ export async function handlerRegister(
   setUser(newUser.name);
 
   console.log(`Registered and logged in as ${newUser.name}`);
+}
+
+
+export async function handlerReset(
+  cmdName: string,
+  ...args: string[]
+): Promise<void> {
+  await resetUsers();
+  console.log("All users have been reset");
 }

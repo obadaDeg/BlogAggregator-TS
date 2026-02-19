@@ -8,6 +8,7 @@ export type Config = {
 };
 
 function getConfigFilePath(): string {
+  console.log(path.join(os.homedir(), ".gatorconfig.json"));
   return path.join(os.homedir(), ".gatorconfig.json");
 }
 

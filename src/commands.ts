@@ -1,5 +1,11 @@
 import { setUser } from "./config.js";
-import { createUser, getUserByName, resetUsers } from "./lib/db/queries/users.js";
+import {
+  createUser,
+  getAllUsers,
+  getUserByName,
+  resetUsers,
+} from "./lib/db/queries/users.js";
+import { readConfig } from "./config.js";
 
 export type CommandHandler = (
   cmdName: string,
@@ -68,11 +74,22 @@ export async function handlerRegister(
   console.log(`Registered and logged in as ${newUser.name}`);
 }
 
-
 export async function handlerReset(
   cmdName: string,
   ...args: string[]
 ): Promise<void> {
   await resetUsers();
   console.log("All users have been reset");
+}
+
+export async function getAllUsersHandler(
+  cmdName: string,
+  ...args: string[]
+): Promise<void> {
+  const users = await getAllUsers();
+  const cfg = readConfig();
+  users.forEach((user) => {
+    const suffix = user.name === cfg.currentUserName ? " (current)" : "";
+    console.log(`* ${user.name}${suffix}`);
+  });
 }

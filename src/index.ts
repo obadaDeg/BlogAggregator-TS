@@ -1,5 +1,6 @@
 import {
   CommandsRegistry,
+  getAllUsersHandler,
   handlerLogin,
   handlerRegister,
   handlerReset,
@@ -13,6 +14,7 @@ async function main() {
   registerCommand(registry, "login", handlerLogin);
   registerCommand(registry, "register", handlerRegister);
   registerCommand(registry, "reset", handlerReset);
+  registerCommand(registry, "users", getAllUsersHandler);
 
   const args = process.argv.slice(2);
 

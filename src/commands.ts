@@ -7,7 +7,13 @@ export type CommandsRegistry = {
 };
 
 export function handlerLogin(cmdName: string, ...args: string[]): void {
-  // TODO: validate args (throw if empty), call setUser, print confirmation
+  if (args.length === 0) {
+    throw new Error("Missing user name");
+  }
+
+  const username = args[0];
+  const cfg = setUser(username);
+  console.log(`Logged in as ${cfg.currentUserName}`);  
 }
 
 export function registerCommand(

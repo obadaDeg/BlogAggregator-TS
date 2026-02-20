@@ -5,5 +5,5 @@ export async function handlerAgg(
   ..._args: string[]
 ): Promise<void> {
   const feed = await fetchFeed("https://www.wagslane.dev/index.xml");
-  console.log(feed);
+  console.log(JSON.stringify(feed, null, 2));
 }

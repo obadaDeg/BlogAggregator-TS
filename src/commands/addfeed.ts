@@ -1,9 +1,5 @@
-import { readConfig } from "../config.js";
 import { createFeed, createFeedFollow, Feed } from "../lib/db/queries/feeds.js";
-import { getUserByName } from "../lib/db/queries/users.js";
-import { users } from "../lib/db/schema.js";
-
-type User = typeof users.$inferSelect;
+import { User } from "./index.js";
 
 function printFeed(feed: Feed, user: User): void {
   console.log(`ID:         ${feed.id}`);
@@ -15,7 +11,8 @@ function printFeed(feed: Feed, user: User): void {
 }
 
 export async function handlerAddFeed(
-  cmdName: string,
+  _cmdName: string,
+  user: User,
   ...args: string[]
 ): Promise<void> {
   if (args.length < 2) {
@@ -23,16 +20,6 @@ export async function handlerAddFeed(
   }
 
   const [name, url] = args;
-  const cfg = readConfig();
-
-  if (!cfg.currentUserName) {
-    throw new Error("No user logged in");
-  }
-
-  const user = await getUserByName(cfg.currentUserName);
-  if (!user) {
-    throw new Error(`User ${cfg.currentUserName} does not exist`);
-  }
 
   const feed = await createFeed(name, url, user.id);
   await createFeedFollow(feed.id, user.id);

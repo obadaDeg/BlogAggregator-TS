@@ -1,9 +1,9 @@
-import { readConfig } from "../config.js";
 import { createFeedFollow, getFeedByUrl } from "../lib/db/queries/feeds.js";
-import { getUserByName } from "../lib/db/queries/users.js";
+import { User } from "./index.js";
 
 export async function handlerFollow(
   _cmdName: string,
+  user: User,
   ...args: string[]
 ): Promise<void> {
   if (args.length < 1) {
@@ -11,16 +11,6 @@ export async function handlerFollow(
   }
 
   const url = args[0];
-  const cfg = readConfig();
-
-  if (!cfg.currentUserName) {
-    throw new Error("No user logged in");
-  }
-
-  const user = await getUserByName(cfg.currentUserName);
-  if (!user) {
-    throw new Error(`User ${cfg.currentUserName} does not exist`);
-  }
 
   const feed = await getFeedByUrl(url);
   if (!feed) {

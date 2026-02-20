@@ -1,12 +1,13 @@
+import { handlerLogin } from "./commands/login.js";
+import { handlerRegister } from "./commands/register.js";
+import { handlerReset } from "./commands/reset.js";
+import { handlerUsers } from "./commands/users.js";
+import { handlerAgg } from "./commands/agg.js";
 import {
   CommandsRegistry,
-  getAllUsersHandler,
-  handlerLogin,
-  handlerRegister,
-  handlerReset,
   registerCommand,
   runCommand,
-} from "./commands.js";
+} from "./commands/index.js";
 
 async function main() {
   const registry: CommandsRegistry = {};
@@ -14,7 +15,8 @@ async function main() {
   registerCommand(registry, "login", handlerLogin);
   registerCommand(registry, "register", handlerRegister);
   registerCommand(registry, "reset", handlerReset);
-  registerCommand(registry, "users", getAllUsersHandler);
+  registerCommand(registry, "users", handlerUsers);
+  registerCommand(registry, "agg", handlerAgg);
 
   const args = process.argv.slice(2);
 
@@ -22,6 +24,7 @@ async function main() {
     console.error("No command provided");
     process.exit(1);
   }
+
   const cmdName = args[0];
   const cmdArgs = args.slice(1);
 

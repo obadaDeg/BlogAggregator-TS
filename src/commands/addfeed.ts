@@ -1,5 +1,5 @@
 import { readConfig } from "../config.js";
-import { createFeed, Feed } from "../lib/db/queries/feeds.js";
+import { createFeed, createFeedFollow, Feed } from "../lib/db/queries/feeds.js";
 import { getUserByName } from "../lib/db/queries/users.js";
 import { users } from "../lib/db/schema.js";
 
@@ -35,5 +35,6 @@ export async function handlerAddFeed(
   }
 
   const feed = await createFeed(name, url, user.id);
+  await createFeedFollow(feed.id, user.id);
   printFeed(feed, user);
 }

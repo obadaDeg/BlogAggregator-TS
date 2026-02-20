@@ -1,5 +1,6 @@
 import { fetchFeed } from "../api/rss.js";
 import { getNextFeedToFetch, markFeedAsFetched } from "../lib/db/queries/feeds.js";
+import { createPost } from "../lib/db/queries/posts.js";
 
 function parseDuration(durationStr: string): number {
   const regex = /^(\d+)(ms|s|m|h)$/;
@@ -45,8 +46,16 @@ async function scrapeFeeds(): Promise<void> {
 
   const rssFeed = await fetchFeed(feed.url);
   for (const item of rssFeed.channel.item) {
-    console.log(` - ${item.title}`);
+    const publishedAt = item.pubDate ? new Date(item.pubDate) : undefined;
+    await createPost(
+      item.title,
+      item.link,
+      feed.id,
+      item.description || undefined,
+      publishedAt instanceof Date && !isNaN(publishedAt.getTime()) ? publishedAt : undefined,
+    );
   }
+  console.log(`Saved ${rssFeed.channel.item.length} posts from ${feed.name}`);
 }
 
 export async function handlerAgg(

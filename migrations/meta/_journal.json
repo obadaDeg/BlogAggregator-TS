@@ -15,6 +15,13 @@
       "when": 1771614132476,
       "tag": "0001_polite_george_stacy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771615882504,
+      "tag": "0002_slimy_revanche",
+      "breakpoints": true
     }
   ]
 }

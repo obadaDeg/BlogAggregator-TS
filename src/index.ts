@@ -7,6 +7,7 @@ import { handlerAddFeed } from "./commands/addfeed.js";
 import { handlerFeeds } from "./commands/feeds.js";
 import { handlerFollow } from "./commands/follow.js";
 import { handlerFollowing } from "./commands/following.js";
+import { handlerUnfollow } from "./commands/unfollow.js";
 import {
   CommandsRegistry,
   middlewareLoggedIn,
@@ -26,6 +27,7 @@ async function main() {
   registerCommand(registry, "feeds", handlerFeeds);
   registerCommand(registry, "follow", middlewareLoggedIn(handlerFollow));
   registerCommand(registry, "following", middlewareLoggedIn(handlerFollowing));
+  registerCommand(registry, "unfollow", middlewareLoggedIn(handlerUnfollow));
 
   const args = process.argv.slice(2);
 

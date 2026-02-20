@@ -106,11 +106,16 @@ npm start browse 10
 
 ## Future Goals
 
+- [ ] Add sorting and filtering options to the `browse` command
 - [ ] Add pagination to the `browse` command
-- [ ] Display full post content via a `read <post-id>` command
-- [ ] Add feed health checks (detect dead/unreachable feeds)
+- [ ] Add concurrency to the `agg` command so it can fetch multiple feeds simultaneously
+- [ ] Add a `search` command that allows fuzzy searching of posts
+- [ ] Add bookmarking or liking posts
+- [ ] Add a TUI that lets you select a post and view it in a readable format (or open it in a browser)
+- [ ] Add an HTTP API with authentication/authorization for remote access
+- [ ] Write a service manager that keeps `agg` running in the background and restarts it on crash
+- [ ] Add feed health checks to detect dead or unreachable feeds
 - [ ] Support OPML import/export for feed lists
-- [ ] Add per-user read/unread post tracking
 - [ ] Write integration tests for all commands
 
 ## Links
